@@ -1,16 +1,20 @@
+import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Calculate {
 
-    public static long readUserInput() {
+    public static BigInteger readUserInput() {
 
         Scanner scanner = new Scanner(System.in);
+        BigInteger base,one;
+        one = new BigInteger("0");
+        base = new BigInteger("-1");
         boolean checkInput = true;
         while (checkInput) {
             String number = scanner.nextLine();
             try {
-                long xxx = Long.parseLong(number);
-                if (xxx >= 0) {
+                BigInteger xxx = new BigInteger(number);
+                if (xxx.compareTo(one)>0) {
                     checkInput = false;
                     return xxx;
                 } else
@@ -20,7 +24,7 @@ public class Calculate {
             }
         }
         scanner.close();
-        return -1;
+        return base;
     }
 
     public static int readOperation() {
@@ -50,25 +54,27 @@ public class Calculate {
 
 
     public static void main(String[] args) {
+        BigInteger firstNumber,secondNumber,result;
+
         System.out.println("Write the first number:");
-        long firstNumber = readUserInput();
+        firstNumber  = readUserInput();
         System.out.println("Write the second number:");
-        long secondNumber = readUserInput();
+        secondNumber  = readUserInput();
         System.out.println("Your the first number: " + firstNumber + "\nYour the second number: " + secondNumber);
         System.out.println("What operation do you want to do? ( '   +   '   -   '   *   ')");
         int check = readOperation();
         switch (check) {
             case 0:
-                long resultAdd = firstNumber + secondNumber;
-                System.out.println("Result: " + resultAdd);
+                result = firstNumber.add(secondNumber);
+                System.out.println("Result: " + result);
                 break;
             case 1:
-                long resultSubstract = firstNumber - secondNumber;
-                System.out.println("Result: " + resultSubstract);
+                result = firstNumber.subtract(secondNumber);
+                System.out.println("Result: " + result);
                 break;
             case 2:
-                long resultMultiply = firstNumber * secondNumber;
-                System.out.println("Result: " + resultMultiply);
+                result = firstNumber.multiply(secondNumber);
+                System.out.println("Result: " + result);
         }
     }
 }
