@@ -14,7 +14,7 @@ public class Calculate {
             String number = scanner.nextLine();
             try {
                 BigInteger xxx = new BigInteger(number);
-                if (xxx.compareTo(one)>0) {
+                if (xxx.compareTo(one)>=0) {
                     checkInput = false;
                     return xxx;
                 } else
