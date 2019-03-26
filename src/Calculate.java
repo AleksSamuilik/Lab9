@@ -7,11 +7,11 @@ public class Calculate {
         Scanner scanner = new Scanner(System.in);
         boolean checkInput = true;
         while (checkInput) {
-          String   numberCard = scanner.nextLine();
-            numberCard = numberCard.replaceAll("\\s", "");
+          String   number = scanner.nextLine();
             try {
-                long xxx = Long.parseLong(numberCard);
-                if (xxx > 0) {
+                long xxx = Long.parseLong(number);
+                if (xxx >= 0) {
+                    checkInput=false;
                     return xxx;
                 } else
                     System.out.println("Sorry. Try again!");
@@ -24,6 +24,12 @@ public class Calculate {
     }
 
     public static void main(String[] args) {
+        System.out.println("Write the first number:");
+        long firstNumber = readUserInput();
+        System.out.println("Write the second number:");
+        long secondNumber=readUserInput();
+        System.out.println("Your the first number: "+firstNumber + "\nYour the second number: "+secondNumber);
+        System.out.println("What operation do you want to do?");
 
 
 
