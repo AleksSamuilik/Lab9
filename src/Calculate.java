@@ -1,19 +1,20 @@
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Calculate {
 
-    public static BigInteger readUserInput() {
+    public static BigDecimal readUserInput() {
 
         Scanner scanner = new Scanner(System.in);
-        BigInteger base,one;
-        one = new BigInteger("0");
-        base = new BigInteger("-1");
+        BigDecimal base,one;
+        one = new BigDecimal("0");
+        base = new BigDecimal("-1");
         boolean checkInput = true;
         while (checkInput) {
             String number = scanner.nextLine();
             try {
-                BigInteger xxx = new BigInteger(number);
+                BigDecimal xxx = new BigDecimal(number);
                 if (xxx.compareTo(one)>=0) {
                     checkInput = false;
                     return xxx;
@@ -34,11 +35,11 @@ public class Calculate {
             String number = scanner.nextLine();
             try {
                 String add = "+";
-                String substract = "-";
+                String subtract = "-";
                 String multiply = "*";
                 if (number.equals(add)) {
                     return 0;
-                } else if (number.equals(substract)) {
+                } else if (number.equals(subtract)) {
                     return 1;
                 } else if (number.equals(multiply)) {
                     return 2;
@@ -54,7 +55,7 @@ public class Calculate {
 
 
     public static void main(String[] args) {
-        BigInteger firstNumber,secondNumber,result;
+        BigDecimal firstNumber,secondNumber,result;
 
         System.out.println("Write the first number:");
         firstNumber  = readUserInput();
