@@ -84,7 +84,6 @@ public class Calculate {
         return builder.toString();
     }
 
-
     public static boolean checkFirstGreaterSecond(String string1, String string2) {
         if (string1.length() > string2.length()) {
             return true;
@@ -124,20 +123,20 @@ public class Calculate {
             largerNumber = stack2;
             lessNumber = stack1;
         }
-        int ost = 0;
+        int residue = 0;
         int digit = 10;
-        int result = 0;
+        int result;
         StringBuilder builder = new StringBuilder();
         while (true) {
             if (lessNumber.size() != 0) {
-                result = largerNumber.pop() - lessNumber.pop() - ost;
+                result = largerNumber.pop() - lessNumber.pop() - residue;
                 if (result >= 0) {
                     builder.insert(0, result);
-                    ost = 0;
+                    residue = 0;
                 } else {
                     result = result + digit;
                     result = (int) (Math.log10((result)));
-                    ost = 1;
+                    residue = 1;
                     builder.insert(0, result);
                 }
             } else if (largerNumber.size() > 0 && lessNumber.size() == 0) {
@@ -147,7 +146,6 @@ public class Calculate {
             }
         }
         return checkResultStringNumber(selectsDirection, builder.toString());
-
     }
 
     public static String checkResultStringNumber(boolean selectsDirection, String resultStringNumber) {
@@ -174,20 +172,19 @@ public class Calculate {
 
     public static String[] arrayString(String string1, String string2) {
         boolean valid = checkFirstGreaterSecond(string1, string2);
-        int lenght;
+        int length;
         Stack<Integer> stackLargeNumber;
         Stack<Integer> stackLessNumber;
         if (valid) {
-            lenght = string2.length();
+            length = string2.length();
             stackLargeNumber = createStack(string1);
             stackLessNumber = createStack(string2);
-
         } else {
-            lenght = string1.length();
+            length = string1.length();
             stackLargeNumber = createStack(string2);
             stackLessNumber = createStack(string1);
         }
-        String[] arrayString = new String[lenght];
+        String[] arrayString = new String[length];
         for (int i = 0; i < arrayString.length; i++) {
             arrayString[i] = multiply(stackLargeNumber, stackLessNumber, i);
             stackLessNumber.pop();
@@ -219,12 +216,11 @@ public class Calculate {
     public static String multiplyOperation(String firstNumber, String secondNumber) {
         String[] array = arrayString(firstNumber, secondNumber);
         String result = "0";
-        for (int i=0;i<array.length;i++){
-            result= additionOperation(result,array[i]);
+        for (int i = 0; i < array.length; i++) {
+            result = additionOperation(result, array[i]);
         }
         return result;
     }
-
 
     public static void main(String[] args) {
         System.out.println("Write the first number:");
