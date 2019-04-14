@@ -54,40 +54,8 @@ public class Calculator implements Operation {
         return "Error";
     }
 
-    public String additionOperation(String firstNumber, String secondNumber) {
-        Stack<Integer> stackFirstNumber = createStack(firstNumber);
-        Stack<Integer> stackSecondNumber = createStack(secondNumber);
-        int residue = 0;
-        int result;
-        int digit;
-        StringBuilder builder = new StringBuilder();
-        while (true) {
-            if (stackFirstNumber.size() != 0 && stackSecondNumber.size() != 0) {
-                result = stackFirstNumber.pop() + stackSecondNumber.pop() + residue;
-                digit = result % 10;
-                residue = (int) (result / Math.pow(10, 1)) % 10;
-                builder.insert(0, digit);
-            } else if (stackFirstNumber.size() != 0 && stackSecondNumber.size() == 0) {
-                result = stackFirstNumber.pop() + residue;
-                residue = (int) (result / Math.pow(10, 1)) % 10;
-                digit = result % 10;
-                builder.insert(0, digit);
-            } else if (stackFirstNumber.size() == 0 && stackSecondNumber.size() != 0) {
-                result = stackSecondNumber.pop() + residue;
-                residue = (int) (result / Math.pow(10, 1)) % 10;
-                digit = result % 10;
-                builder.insert(0, digit);
-            } else {
-                if (residue > 0) {
-                    builder.insert(0, residue);
-                }
-                break;
-            }
-        }
-        return builder.toString();
-    }
 
-    private static boolean comparisonOperation(String firstNumber, String secondNumber) {
+    public static boolean comparisonOperation(String firstNumber, String secondNumber) {
         if (firstNumber.compareTo(secondNumber) > 0) {
             return true;
         } else if (firstNumber.compareTo(secondNumber) == 0) {
@@ -97,7 +65,7 @@ public class Calculator implements Operation {
         }
     }
 
-    private static Stack createStack(String number) {
+    public static Stack createStack(String number) {
         Stack<Integer> stack = new Stack<Integer>();
         for (int i = 0; i < number.length(); i++) {
             stack.push(Character.digit(number.charAt(i), 10));
@@ -105,45 +73,8 @@ public class Calculator implements Operation {
         return stack;
     }
 
-    public  String subtractionOperation(String firstNumber, String secondNumber) {
-        boolean selectsDirection = comparisonOperation(firstNumber, secondNumber);
-        Stack<Integer> stack1 = createStack(firstNumber);
-        Stack<Integer> stack2 = createStack(secondNumber);
-        Stack<Integer> largerNumber;
-        Stack<Integer> lessNumber;
-        if (selectsDirection) {
-            largerNumber = stack1;
-            lessNumber = stack2;
-        } else {
-            largerNumber = stack2;
-            lessNumber = stack1;
-        }
-        int residue = 0;
-        int digit = 10;
-        int result;
-        StringBuilder builder = new StringBuilder();
-        while (true) {
-            if (lessNumber.size() != 0) {
-                result = largerNumber.pop() - lessNumber.pop() - residue;
-                if (result >= 0) {
-                    builder.insert(0, result);
-                    residue = 0;
-                } else {
-                    result = result + digit;
-                    result = (int) (Math.log10((result)));
-                    residue = 1;
-                    builder.insert(0, result);
-                }
-            } else if (largerNumber.size() > 0 && lessNumber.size() == 0) {
-                builder.insert(0, largerNumber.pop());
-            } else if (largerNumber.size() == 0 && lessNumber.size() == 0) {
-                break;
-            }
-        }
-        return checkResultStringNumber(selectsDirection, builder.toString());
-    }
 
-    private static String checkResultStringNumber(boolean selectsDirection, String resultStringNumber) {
+    public static String checkResultStringNumber(boolean selectsDirection, String resultStringNumber) {
         String result = "";
         char check = '0';
         for (int i = 0; i < resultStringNumber.length(); i++) {
@@ -165,63 +96,15 @@ public class Calculator implements Operation {
         return result;
     }
 
-    private static String[] arrayString(String firstNumber, String secondNumber) {
-        boolean valid = comparisonOperation(firstNumber, secondNumber);
-        int length;
-        Stack<Integer> stackLargeNumber;
-        Stack<Integer> stackLessNumber;
-        if (valid) {
-            length = secondNumber.length();
-            stackLargeNumber = createStack(firstNumber);
-            stackLessNumber = createStack(secondNumber);
-        } else {
-            length = firstNumber.length();
-            stackLargeNumber = createStack(secondNumber);
-            stackLessNumber = createStack(firstNumber);
-        }
-        String[] arrayString = new String[length];
-        for (int i = 0; i < arrayString.length; i++) {
-            arrayString[i] = multiply(stackLargeNumber, stackLessNumber, i);
-            stackLessNumber.pop();
-        }
-        return arrayString;
-    }
-
-    private static String multiply(Stack<Integer> stackLargeNumber, Stack<Integer> stackLessNumber, int numberLineArray) {
-        StringBuilder builder = new StringBuilder();
-        Stack<Integer> number = new Stack<>();
-        number.addAll(stackLargeNumber);
-        int residue = 0;
-        int result = 0;
-        for (int i = 0; i < stackLargeNumber.size(); i++) {
-            result = number.pop() * stackLessNumber.peek() + residue;
-            int digit = result % 10;
-            residue = (int) (result / Math.pow(10, 1)) % 10;
-            builder.insert(0, digit);
-        }
-        if (residue > 0) {
-            builder.insert(0, residue);
-        }
-        for (int i = 0; i < numberLineArray; i++) {
-            builder.insert(builder.length(), "0");
-        }
-        return builder.toString();
-    }
-
-    public  String multiplyOperation(String firstNumber, String secondNumber) {
-        String[] array = arrayString(firstNumber, secondNumber);
-        String result = "0";
-        for (int i = 0; i < array.length; i++) {
-            result = additionOperation(result, array[i]);
-        }
-        return checkResultStringNumber(true, result);
-    }
 
     public String operate(String firstNumber, String secondNumber) {
         Map<String, Object> operation = new HashMap<>();
-        operation.put("+", additionOperation(firstNumber, secondNumber));
-        operation.put("-", subtractionOperation(firstNumber, secondNumber));
-        operation.put("*", multiplyOperation(firstNumber, secondNumber));
+        Operation add = new Addition();
+Operation multiply = new Multiplication();
+Operation subtract = new Subtraction();
+        operation.put("+", add.operate(firstNumber, secondNumber));
+        operation.put("-", subtract.operate(firstNumber, secondNumber));
+        operation.put("*", multiply.operate(firstNumber, secondNumber));
         String selectOperation = selectOperation(firstNumber, secondNumber);
         return (String) operation.get(selectOperation);
     }
