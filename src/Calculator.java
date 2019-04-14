@@ -54,7 +54,7 @@ public class Calculator implements Operation {
         return "Error";
     }
 
-    private static String additionOperation(String firstNumber, String secondNumber) {
+    public String additionOperation(String firstNumber, String secondNumber) {
         Stack<Integer> stackFirstNumber = createStack(firstNumber);
         Stack<Integer> stackSecondNumber = createStack(secondNumber);
         int residue = 0;
@@ -105,7 +105,7 @@ public class Calculator implements Operation {
         return stack;
     }
 
-    private static String subtractionOperation(String firstNumber, String secondNumber) {
+    public  String subtractionOperation(String firstNumber, String secondNumber) {
         boolean selectsDirection = comparisonOperation(firstNumber, secondNumber);
         Stack<Integer> stack1 = createStack(firstNumber);
         Stack<Integer> stack2 = createStack(secondNumber);
@@ -208,7 +208,7 @@ public class Calculator implements Operation {
         return builder.toString();
     }
 
-    public static String multiplyOperation(String firstNumber, String secondNumber) {
+    public  String multiplyOperation(String firstNumber, String secondNumber) {
         String[] array = arrayString(firstNumber, secondNumber);
         String result = "0";
         for (int i = 0; i < array.length; i++) {
@@ -239,10 +239,10 @@ public class Calculator implements Operation {
     }
 
     public static void main(String[] args) {
-        Calculator calculator = new Calculator();
-        String firstNumber = calculator.getNumber("first");
-        String secondNumber = calculator.getNumber("second");
-        String result = calculator.operate(firstNumber, secondNumber);
+        Calculator operate = new Calculator();
+        String firstNumber = operate.getNumber("first");
+        String secondNumber = operate.getNumber("second");
+        String result = operate.operate(firstNumber, secondNumber);
         System.out.println(result);
 
     }
