@@ -1,10 +1,8 @@
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
-
-public class Calculator implements Operation {
+public class Calculator {
 
     private String readUserInput() {
         Scanner scanner = new Scanner(System.in);
@@ -54,11 +52,8 @@ public class Calculator implements Operation {
         return "Error";
     }
 
-
     public static boolean comparisonOperation(String firstNumber, String secondNumber) {
-        if (firstNumber.compareTo(secondNumber) > 0) {
-            return true;
-        } else if (firstNumber.compareTo(secondNumber) == 0) {
+        if (firstNumber.compareTo(secondNumber) >= 0) {
             return true;
         } else {
             return false;
@@ -72,7 +67,6 @@ public class Calculator implements Operation {
         }
         return stack;
     }
-
 
     public static String checkResultStringNumber(boolean selectsDirection, String resultStringNumber) {
         String result = "";
@@ -96,19 +90,16 @@ public class Calculator implements Operation {
         return result;
     }
 
-
-    public String operate(String firstNumber, String secondNumber) {
-        Map<String, Object> operation = new HashMap<>();
+    public Operation getOperation(String operationSymbol) {
+        Map<String, Operation> operationMap = new HashMap<>();
         Operation add = new Addition();
-Operation multiply = new Multiplication();
-Operation subtract = new Subtraction();
-        operation.put("+", add.operate(firstNumber, secondNumber));
-        operation.put("-", subtract.operate(firstNumber, secondNumber));
-        operation.put("*", multiply.operate(firstNumber, secondNumber));
-        String selectOperation = selectOperation(firstNumber, secondNumber);
-        return (String) operation.get(selectOperation);
+        Operation multiply = new Multiplication();
+        Operation subtract = new Subtraction();
+        operationMap.put("+", add);
+        operationMap.put("-", subtract);
+        operationMap.put("*", multiply);
+        return operationMap.get(operationSymbol);
     }
-
 
     public String selectOperation(String firstNumber, String secondNumber) {
         System.out.println("Your the first number: " + firstNumber + "\nYour the second number: " + secondNumber);
@@ -122,10 +113,12 @@ Operation subtract = new Subtraction();
     }
 
     public static void main(String[] args) {
-        Calculator operate = new Calculator();
-        String firstNumber = operate.getNumber("first");
-        String secondNumber = operate.getNumber("second");
-        String result = operate.operate(firstNumber, secondNumber);
+        Calculator calculator = new Calculator();
+        String firstNumber = calculator.getNumber("first");
+        String secondNumber = calculator.getNumber("second");
+        String operationSymbol = calculator.selectOperation(firstNumber, secondNumber);
+        Operation operation = calculator.getOperation(operationSymbol);
+        String result = operation.operate(firstNumber, secondNumber);
         System.out.println(result);
 
     }
