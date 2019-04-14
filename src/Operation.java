@@ -1,4 +1,4 @@
 public interface Operation {
-     String operate ();
+     String operate (String firstNumber,String secondNumber);
 
 }

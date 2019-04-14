@@ -1,4 +1,6 @@
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -98,7 +100,7 @@ public class Calculator implements Operation {
     private static Stack createStack(String number) {
         Stack<Integer> stack = new Stack<Integer>();
         for (int i = 0; i < number.length(); i++) {
-            stack.push(Character.digit(number.charAt(i),10));
+            stack.push(Character.digit(number.charAt(i), 10));
         }
         return stack;
     }
@@ -163,7 +165,7 @@ public class Calculator implements Operation {
         return result;
     }
 
-    public static String[] arrayString(String firstNumber, String secondNumber) {
+    private static String[] arrayString(String firstNumber, String secondNumber) {
         boolean valid = comparisonOperation(firstNumber, secondNumber);
         int length;
         Stack<Integer> stackLargeNumber;
@@ -185,7 +187,7 @@ public class Calculator implements Operation {
         return arrayString;
     }
 
-    public static String multiply(Stack<Integer> stackLargeNumber, Stack<Integer> stackLessNumber, int numberLineArray) {
+    private static String multiply(Stack<Integer> stackLargeNumber, Stack<Integer> stackLessNumber, int numberLineArray) {
         StringBuilder builder = new StringBuilder();
         Stack<Integer> number = new Stack<>();
         number.addAll(stackLargeNumber);
@@ -212,27 +214,21 @@ public class Calculator implements Operation {
         for (int i = 0; i < array.length; i++) {
             result = additionOperation(result, array[i]);
         }
-        return  checkResultStringNumber(true,result);
+        return checkResultStringNumber(true, result);
     }
 
-    public String operate (){
-       String firstNumber = getNumber("first");
-       String secondNumber = getNumber("second");
-        String selectOperation = selectOperation(firstNumber,secondNumber);
-        if (selectOperation.equals("+")) {
-            return additionOperation(firstNumber,secondNumber);
-        } else if (selectOperation.equals("-")) {
-return subtractionOperation(firstNumber,secondNumber);
-        } else if (selectOperation.equals("*")) {
-            return multiplyOperation(firstNumber, secondNumber);
-        } else {
-            return "Error";
-        }
+    public String operate(String firstNumber, String secondNumber) {
+        Map<String, Object> operation = new HashMap<>();
+        operation.put("+", additionOperation(firstNumber, secondNumber));
+        operation.put("-", subtractionOperation(firstNumber, secondNumber));
+        operation.put("*", multiplyOperation(firstNumber, secondNumber));
+        String selectOperation = selectOperation(firstNumber, secondNumber);
+        return (String) operation.get(selectOperation);
     }
 
 
     public String selectOperation(String firstNumber, String secondNumber) {
-        System.out.println("Your the first number: " + firstNumber+ "\nYour the second number: "+secondNumber);
+        System.out.println("Your the first number: " + firstNumber + "\nYour the second number: " + secondNumber);
         System.out.println("What operation do you want to do? ( '   +   '   -   '   *   ')");
         return readOperation();
     }
@@ -243,8 +239,11 @@ return subtractionOperation(firstNumber,secondNumber);
     }
 
     public static void main(String[] args) {
-        Operation operation = new Calculator();
-        System.out.println(operation.operate());
+        Calculator calculator = new Calculator();
+        String firstNumber = calculator.getNumber("first");
+        String secondNumber = calculator.getNumber("second");
+        String result = calculator.operate(firstNumber, secondNumber);
+        System.out.println(result);
 
     }
 }
