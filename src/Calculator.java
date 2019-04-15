@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
+
 public class Calculator {
 
     private String readUserInput() {
@@ -36,12 +37,15 @@ public class Calculator {
                 String add = "+";
                 String subtract = "-";
                 String multiply = "*";
+                String exponent = "^";
                 if (number.equals(add)) {
                     return "+";
                 } else if (number.equals(subtract)) {
                     return "-";
                 } else if (number.equals(multiply)) {
                     return "*";
+                } else if (number.equals(exponent)) {
+                    return "^";
                 } else
                     System.out.println("Sorry. Try again!");
             } catch (NumberFormatException e) {
@@ -95,28 +99,32 @@ public class Calculator {
         Operation add = new Addition();
         Operation multiply = new Multiplication();
         Operation subtract = new Subtraction();
+        Operation exponent = new Exponentiation();
         operationMap.put("+", add);
         operationMap.put("-", subtract);
         operationMap.put("*", multiply);
+        operationMap.put("^", exponent);
         return operationMap.get(operationSymbol);
     }
 
-    public String selectOperation(String firstNumber, String secondNumber) {
-        System.out.println("Your the first number: " + firstNumber + "\nYour the second number: " + secondNumber);
-        System.out.println("What operation do you want to do? ( '   +   '   -   '   *   ')");
+    public String selectOperation() {
+        System.out.println("What operation do you want to do? ( '   +   '   -   '   *   '   ^   )");
         return readOperation();
     }
 
-    public String getNumber(String nameNumber) {
+    public String getNumber(String nameNumber, String operationSymbol) {
+        if (operationSymbol.equals("^")) {
+        return null;
+        } else
         System.out.println("Write the " + nameNumber + " number:");
         return readUserInput();
     }
 
     public static void main(String[] args) {
         Calculator calculator = new Calculator();
-        String firstNumber = calculator.getNumber("first");
-        String secondNumber = calculator.getNumber("second");
-        String operationSymbol = calculator.selectOperation(firstNumber, secondNumber);
+        String firstNumber = calculator.getNumber("first","");
+        String operationSymbol = calculator.selectOperation();
+        String secondNumber = calculator.getNumber("second",operationSymbol);
         Operation operation = calculator.getOperation(operationSymbol);
         String result = operation.operate(firstNumber, secondNumber);
         System.out.println(result);
