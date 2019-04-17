@@ -2,7 +2,14 @@ import java.util.Stack;
 
 public class Subtraction implements Operation {
 
-    public  String operate(String firstNumber, String secondNumber) {
+    public int counterGetNumber(){
+final int operandsNumber = 2;
+        return operandsNumber;
+    }
+
+    public  String operate(String ... number) {
+        String firstNumber = number[0];
+        String secondNumber = number[1];
         Calculator calculator = new Calculator();
         boolean selectsDirection =calculator.comparisonOperation(firstNumber, secondNumber);
         Stack<Integer> stack1 =calculator.createStack(firstNumber);

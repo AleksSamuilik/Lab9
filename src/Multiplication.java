@@ -3,7 +3,14 @@ import java.util.Stack;
 
 public class Multiplication implements Operation {
 
-    public String operate(String firstNumber, String secondNumber) {
+    public int counterGetNumber(){
+        final int operandsNumber = 2;
+        return operandsNumber;
+    }
+
+    public String operate(String ... number) {
+        String firstNumber=number[0];
+        String secondNumber=number[1];
         Calculator multiplication = new Calculator();
         Operation addition = new Addition();
         String[] array = arrayString(firstNumber, secondNumber);

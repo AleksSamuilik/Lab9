@@ -1,7 +1,16 @@
 import java.util.Stack;
 
 public class Addition implements Operation {
-    public String operate(String firstNumber, String secondNumber) {
+
+
+    public int counterGetNumber(){
+        final int operandsNumber = 2;
+        return operandsNumber;
+    }
+
+    public String operate(String ... number) {
+       String  firstNumber=number[0];
+       String  secondNumber=number[1];
         Calculator addition = new Calculator();
         Stack<Integer> stackFirstNumber = addition.createStack(firstNumber);
         Stack<Integer> stackSecondNumber = addition.createStack(secondNumber);

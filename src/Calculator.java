@@ -33,22 +33,10 @@ public class Calculator {
         boolean checkInput = true;
         while (checkInput) {
             String number = scanner.nextLine();
-            try {
-                String add = "+";
-                String subtract = "-";
-                String multiply = "*";
-                String exponent = "^";
-                if (number.equals(add)) {
-                    return "+";
-                } else if (number.equals(subtract)) {
-                    return "-";
-                } else if (number.equals(multiply)) {
-                    return "*";
-                } else if (number.equals(exponent)) {
-                    return "^";
-                } else
-                    System.out.println("Sorry. Try again!");
-            } catch (NumberFormatException e) {
+            String string = "+-*^";
+            if (number.length() == 1 && string.contains(number)) {
+                return number;
+            } else {
                 System.out.println("Sorry. Try again!");
             }
         }
@@ -99,7 +87,7 @@ public class Calculator {
         Operation add = new Addition();
         Operation multiply = new Multiplication();
         Operation subtract = new Subtraction();
-        Operation exponent = new Exponentiation();
+        Operation exponent = new SquareExponent();
         operationMap.put("+", add);
         operationMap.put("-", subtract);
         operationMap.put("*", multiply);
@@ -112,22 +100,32 @@ public class Calculator {
         return readOperation();
     }
 
-    public String getNumber(String nameNumber, String operationSymbol) {
-        if (operationSymbol.equals("^")) {
-        return null;
-        } else
-        System.out.println("Write the " + nameNumber + " number:");
-        return readUserInput();
+    public String[] getNumber(int quantityNumber) {
+        String[] arrayNumber = new String[quantityNumber];
+        for (int i = 0; i < quantityNumber; i++) {
+            System.out.println("Write the number:");
+            arrayNumber[i] = readUserInput();
+        }
+        return arrayNumber;
     }
 
     public static void main(String[] args) {
         Calculator calculator = new Calculator();
-        String firstNumber = calculator.getNumber("first","");
         String operationSymbol = calculator.selectOperation();
-        String secondNumber = calculator.getNumber("second",operationSymbol);
         Operation operation = calculator.getOperation(operationSymbol);
-        String result = operation.operate(firstNumber, secondNumber);
-        System.out.println(result);
+        int quantityNumber = operation.counterGetNumber();
+        String result = operation.operate(calculator.getNumber(quantityNumber));
+        calculator.printResult(result, operationSymbol);
 
+    }
+
+    private void printResult(String result, String operationSymbol) {
+        Map<String, String> nameOperation = new HashMap<>();
+        nameOperation.put("+", "Addition");
+        nameOperation.put("-", "Subtraction");
+        nameOperation.put("*", "Multiplication");
+        nameOperation.put("^", "Square exponentiation");
+        System.out.println(nameOperation.get(operationSymbol) + " result:");
+        System.out.println(result);
     }
 }

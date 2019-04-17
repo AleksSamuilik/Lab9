@@ -1,5 +1,6 @@
 public interface Operation {
 
-  public  String operate(String firsNumber, String secondNumber);
+  public  String operate(String ... number);
+  public int counterGetNumber();
 
 }
