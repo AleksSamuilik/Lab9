@@ -1,19 +1,31 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
-public class Addition implements Operation {
+public class Addition extends MethodsOperation implements Operation {
 
 
-    public int counterGetNumber(){
+    public int getNumberOfOperands() {
         final int operandsNumber = 2;
         return operandsNumber;
     }
 
-    public String operate(String ... number) {
-       String  firstNumber=number[0];
-       String  secondNumber=number[1];
-        Calculator addition = new Calculator();
-        Stack<Integer> stackFirstNumber = addition.createStack(firstNumber);
-        Stack<Integer> stackSecondNumber = addition.createStack(secondNumber);
+    public Map getSymbolOperation() {
+        Map<String, Operation> operation = new HashMap<>();
+        Operation add = new Addition();
+        operation.put("+", add);
+        return operation;
+    }
+
+    public String getName() {
+        return "Addition";
+    }
+
+    public String operate(String... number) {
+        String firstNumber = number[0];
+        String secondNumber = number[1];
+        Stack<Integer> stackFirstNumber = createStack(firstNumber);
+        Stack<Integer> stackSecondNumber = createStack(secondNumber);
         int residue = 0;
         int result;
         int digit;

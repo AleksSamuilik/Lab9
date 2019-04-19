@@ -1,6 +1,13 @@
+import java.util.Map;
+
 public interface Operation {
 
-  public  String operate(String ... number);
-  public int counterGetNumber();
+    String operate(String... number);
+
+    int getNumberOfOperands();
+
+    Map getSymbolOperation();
+
+    String getName();
 
 }

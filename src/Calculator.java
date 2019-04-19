@@ -1,7 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class Calculator {
 
@@ -32,67 +31,31 @@ public class Calculator {
         Scanner scanner = new Scanner(System.in);
         boolean checkInput = true;
         while (checkInput) {
-            String number = scanner.nextLine();
-            String string = "+-*^";
-            if (number.length() == 1 && string.contains(number)) {
-                return number;
+            String symbol = scanner.nextLine();
+            if (operationMap().containsKey(symbol)){
+                return symbol;
             } else {
                 System.out.println("Sorry. Try again!");
             }
         }
-        scanner.close();
         return "Error";
     }
 
-    public static boolean comparisonOperation(String firstNumber, String secondNumber) {
-        if (firstNumber.compareTo(secondNumber) >= 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static Stack createStack(String number) {
-        Stack<Integer> stack = new Stack<Integer>();
-        for (int i = 0; i < number.length(); i++) {
-            stack.push(Character.digit(number.charAt(i), 10));
-        }
-        return stack;
-    }
-
-    public static String checkResultStringNumber(boolean selectsDirection, String resultStringNumber) {
-        String result = "";
-        char check = '0';
-        for (int i = 0; i < resultStringNumber.length(); i++) {
-            if (resultStringNumber.charAt(i) == check && resultStringNumber.length() > i + 1) {
-                result = resultStringNumber.substring(i + 1);
-            } else if (resultStringNumber.charAt(i) != check) {
-                result = resultStringNumber.substring(i);
-                break;
-            } else {
-                break;
-            }
-        }
-        if (!selectsDirection && (result.length() != 1 || result.charAt(result.length() - 1) != check)) {
-            StringBuilder builder = new StringBuilder();
-            builder.insert(0, result);
-            builder.insert(0, "-");
-            result = builder.toString();
-        }
-        return result;
+    public Map<String,Operation> operationMap (){
+        Operation add = new Addition();
+        Operation subtract = new Subtraction();
+        Operation multiply = new Multiplication();
+        Operation exponent = new SquareExponent();
+        Map<String,Operation> operationMap = new HashMap<>();
+        operationMap.putAll(add.getSymbolOperation());
+        operationMap.putAll(subtract.getSymbolOperation());
+        operationMap.putAll(multiply.getSymbolOperation());
+        operationMap.putAll(exponent.getSymbolOperation());
+       return operationMap;
     }
 
     public Operation getOperation(String operationSymbol) {
-        Map<String, Operation> operationMap = new HashMap<>();
-        Operation add = new Addition();
-        Operation multiply = new Multiplication();
-        Operation subtract = new Subtraction();
-        Operation exponent = new SquareExponent();
-        operationMap.put("+", add);
-        operationMap.put("-", subtract);
-        operationMap.put("*", multiply);
-        operationMap.put("^", exponent);
-        return operationMap.get(operationSymbol);
+      return   operationMap().get(operationSymbol);
     }
 
     public String selectOperation() {
@@ -100,10 +63,10 @@ public class Calculator {
         return readOperation();
     }
 
-    public String[] getNumber(int quantityNumber) {
-        String[] arrayNumber = new String[quantityNumber];
-        for (int i = 0; i < quantityNumber; i++) {
-            System.out.println("Write the number:");
+    public String[] getOperands(int quantity) {
+        String[] arrayNumber = new String[quantity];
+        for (int i = 0; i < quantity; i++) {
+            System.out.println("Enter the number:");
             arrayNumber[i] = readUserInput();
         }
         return arrayNumber;
@@ -113,19 +76,15 @@ public class Calculator {
         Calculator calculator = new Calculator();
         String operationSymbol = calculator.selectOperation();
         Operation operation = calculator.getOperation(operationSymbol);
-        int quantityNumber = operation.counterGetNumber();
-        String result = operation.operate(calculator.getNumber(quantityNumber));
-        calculator.printResult(result, operationSymbol);
+        int quantity = operation.getNumberOfOperands();
+        String result = operation.operate(calculator.getOperands(quantity));
+        calculator.printResult(result, operation);
 
     }
 
-    private void printResult(String result, String operationSymbol) {
-        Map<String, String> nameOperation = new HashMap<>();
-        nameOperation.put("+", "Addition");
-        nameOperation.put("-", "Subtraction");
-        nameOperation.put("*", "Multiplication");
-        nameOperation.put("^", "Square exponentiation");
-        System.out.println(nameOperation.get(operationSymbol) + " result:");
+    private void printResult(String result, Operation operation) {
+        System.out.println(operation.getName() + " result:");
         System.out.println(result);
+
     }
 }

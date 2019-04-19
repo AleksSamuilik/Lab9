@@ -1,19 +1,31 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
-public class Subtraction implements Operation {
+public class Subtraction extends MethodsOperation implements Operation {
 
-    public int counterGetNumber(){
-final int operandsNumber = 2;
+    public int getNumberOfOperands() {
+        final int operandsNumber = 2;
         return operandsNumber;
     }
 
-    public  String operate(String ... number) {
+    public Map getSymbolOperation() {
+        Map<String, Operation> operation = new HashMap<>();
+        Operation subtract = new Subtraction();
+        operation.put("-", subtract);
+        return operation;
+    }
+
+    public String getName(){
+        return "Subtraction";
+    }
+
+    public String operate(String... number) {
         String firstNumber = number[0];
         String secondNumber = number[1];
-        Calculator calculator = new Calculator();
-        boolean selectsDirection =calculator.comparisonOperation(firstNumber, secondNumber);
-        Stack<Integer> stack1 =calculator.createStack(firstNumber);
-        Stack<Integer> stack2 =calculator.createStack(secondNumber);
+        boolean selectsDirection = comparisonOperation(firstNumber, secondNumber);
+        Stack<Integer> stack1 = createStack(firstNumber);
+        Stack<Integer> stack2 = createStack(secondNumber);
         Stack<Integer> largerNumber;
         Stack<Integer> lessNumber;
         if (selectsDirection) {
@@ -45,6 +57,6 @@ final int operandsNumber = 2;
                 break;
             }
         }
-        return calculator.checkResultStringNumber(selectsDirection, builder.toString());
+        return checkResultStringNumber(selectsDirection, builder.toString());
     }
 }
