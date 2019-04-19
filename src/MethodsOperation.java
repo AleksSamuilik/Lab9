@@ -13,7 +13,7 @@ public class MethodsOperation {
     public Stack createStack(String number) {
         Stack<Integer> stack = new Stack<Integer>();
         for (int i = 0; i < number.length(); i++) {
-            stack.push(Character.digit(number.charAt(i), 10));
+            stack.push(Character.getNumericValue(number.charAt(i)));
         }
         return stack;
     }
