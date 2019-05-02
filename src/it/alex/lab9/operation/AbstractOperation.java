@@ -1,8 +1,12 @@
+package it.alex.lab9.operation;
+
+import it.alex.lab9.Operation;
+
 import java.util.Stack;
 
-public class MethodsOperation {
+public abstract class AbstractOperation implements Operation {
 
-    public boolean comparisonOperation(String firstNumber, String secondNumber) {
+    protected boolean comparisonOperation(String firstNumber, String secondNumber) {
         if (firstNumber.compareTo(secondNumber) >= 0) {
             return true;
         } else {
@@ -10,15 +14,20 @@ public class MethodsOperation {
         }
     }
 
-    public Stack createStack(String number) {
-        Stack<Integer> stack = new Stack<Integer>();
+    public int getNumberOfOperands() {
+        final int operandsNumber = 2;
+        return operandsNumber;
+    }
+
+    protected Stack createStack(String number) {
+        Stack<Integer> stack = new Stack<>();
         for (int i = 0; i < number.length(); i++) {
-            stack.push(Character.getNumericValue(number.charAt(i)));
+            stack.push(number.charAt(i) - '0');
         }
         return stack;
     }
 
-    public String checkResultStringNumber(boolean selectsDirection, String resultStringNumber) {
+    protected String checkResultStringNumber(boolean selectsDirection, String resultStringNumber) {
         String result = "";
         char check = '0';
         for (int i = 0; i < resultStringNumber.length(); i++) {

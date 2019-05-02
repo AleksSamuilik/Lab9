@@ -1,21 +1,13 @@
-import java.util.HashMap;
-import java.util.Map;
+package it.alex.lab9.operation;
+
 import java.util.Stack;
 
 
-public class Multiplication extends MethodsOperation implements Operation {
+public class Multiplication extends AbstractOperation {
 
-
-    public int getNumberOfOperands() {
-        final int operandsNumber = 2;
-        return operandsNumber;
-    }
-
-    public Map getSymbolOperation() {
-        Map<String, Operation> operation = new HashMap<>();
-        Operation multiply = new Multiplication();
-        operation.put("*", multiply);
-        return operation;
+    public final String getOperationSymbol() {
+        String symbol = "*";
+        return symbol;
     }
 
     public String getName() {

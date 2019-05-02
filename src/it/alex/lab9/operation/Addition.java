@@ -1,20 +1,12 @@
-import java.util.HashMap;
-import java.util.Map;
+package it.alex.lab9.operation;
+
 import java.util.Stack;
 
-public class Addition extends MethodsOperation implements Operation {
+public class Addition extends AbstractOperation {
 
-
-    public int getNumberOfOperands() {
-        final int operandsNumber = 2;
-        return operandsNumber;
-    }
-
-    public Map getSymbolOperation() {
-        Map<String, Operation> operation = new HashMap<>();
-        Operation add = new Addition();
-        operation.put("+", add);
-        return operation;
+    public final String getOperationSymbol() {
+        String symbol = "+";
+        return symbol;
     }
 
     public String getName() {

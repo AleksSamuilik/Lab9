@@ -1,22 +1,15 @@
-import java.util.HashMap;
-import java.util.Map;
+package it.alex.lab9.operation;
+
 import java.util.Stack;
 
-public class Subtraction extends MethodsOperation implements Operation {
+public class Subtraction extends AbstractOperation {
 
-    public int getNumberOfOperands() {
-        final int operandsNumber = 2;
-        return operandsNumber;
+    public final String getOperationSymbol() {
+        String symbol = "-";
+        return symbol;
     }
 
-    public Map getSymbolOperation() {
-        Map<String, Operation> operation = new HashMap<>();
-        Operation subtract = new Subtraction();
-        operation.put("-", subtract);
-        return operation;
-    }
-
-    public String getName(){
+    public String getName() {
         return "Subtraction";
     }
 

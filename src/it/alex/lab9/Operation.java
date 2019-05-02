@@ -1,4 +1,4 @@
-import java.util.Map;
+package it.alex.lab9;
 
 public interface Operation {
 
@@ -6,7 +6,7 @@ public interface Operation {
 
     int getNumberOfOperands();
 
-    Map getSymbolOperation();
+    String getOperationSymbol();
 
     String getName();
 

@@ -1,18 +1,17 @@
-import java.util.HashMap;
-import java.util.Map;
+package it.alex.lab9.operation;
 
-public class SquareExponent implements Operation {
+import it.alex.lab9.Operation;
+
+public class SquareExponent extends AbstractOperation {
 
     public int getNumberOfOperands() {
         final int operandsNumber = 1;
         return operandsNumber;
     }
 
-    public Map getSymbolOperation() {
-        Map<String, Operation> operation = new HashMap<>();
-        Operation exponent = new SquareExponent();
-        operation.put("^", exponent);
-        return operation;
+    public final String getOperationSymbol() {
+        String symbol = "^";
+        return symbol;
     }
 
     public String getName() {

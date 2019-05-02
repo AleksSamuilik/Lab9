@@ -1,8 +1,25 @@
+package it.alex.lab9;
+
+import it.alex.lab9.operation.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Calculator {
+    private final Map<String, Operation> operationMap;
+
+    public Calculator() {
+        Operation add = new Addition();
+        Operation subtract = new Subtraction();
+        Operation multiply = new Multiplication();
+        Operation exponent = new SquareExponent();
+        operationMap = new HashMap<>();
+        operationMap.put(add.getOperationSymbol(), add);
+        operationMap.put(subtract.getOperationSymbol(), subtract);
+        operationMap.put(multiply.getOperationSymbol(), multiply);
+        operationMap.put(exponent.getOperationSymbol(), exponent);
+    }
 
     private String readUserInput() {
         Scanner scanner = new Scanner(System.in);
@@ -32,7 +49,7 @@ public class Calculator {
         boolean checkInput = true;
         while (checkInput) {
             String symbol = scanner.nextLine();
-            if (operationMap().containsKey(symbol)){
+            if (operationMap.containsKey(symbol)) {
                 return symbol;
             } else {
                 System.out.println("Sorry. Try again!");
@@ -41,21 +58,8 @@ public class Calculator {
         return "Error";
     }
 
-    public Map<String,Operation> operationMap (){
-        Operation add = new Addition();
-        Operation subtract = new Subtraction();
-        Operation multiply = new Multiplication();
-        Operation exponent = new SquareExponent();
-        Map<String,Operation> operationMap = new HashMap<>();
-        operationMap.putAll(add.getSymbolOperation());
-        operationMap.putAll(subtract.getSymbolOperation());
-        operationMap.putAll(multiply.getSymbolOperation());
-        operationMap.putAll(exponent.getSymbolOperation());
-       return operationMap;
-    }
-
     public Operation getOperation(String operationSymbol) {
-      return   operationMap().get(operationSymbol);
+        return operationMap.get(operationSymbol);
     }
 
     public String selectOperation() {
