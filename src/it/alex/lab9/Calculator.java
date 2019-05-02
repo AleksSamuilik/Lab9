@@ -58,16 +58,16 @@ public class Calculator {
         return "Error";
     }
 
-    public Operation getOperation(String operationSymbol) {
+    private Operation getOperation(String operationSymbol) {
         return operationMap.get(operationSymbol);
     }
 
-    public String selectOperation() {
+    private String selectOperation() {
         System.out.println("What operation do you want to do? ( '   +   '   -   '   *   '   ^   )");
         return readOperation();
     }
 
-    public String[] getOperands(int quantity) {
+    private String[] getOperands(int quantity) {
         String[] arrayNumber = new String[quantity];
         for (int i = 0; i < quantity; i++) {
             System.out.println("Enter the number:");
@@ -83,12 +83,10 @@ public class Calculator {
         int quantity = operation.getNumberOfOperands();
         String result = operation.operate(calculator.getOperands(quantity));
         calculator.printResult(result, operation);
-
     }
 
     private void printResult(String result, Operation operation) {
         System.out.println(operation.getName() + " result:");
         System.out.println(result);
-
     }
 }
