@@ -76,7 +76,7 @@ public class Calculator {
         return arrayNumber;
     }
 
-    public static void main(String[] args) {
+   public void calculate(){
         Calculator calculator = new Calculator();
         String operationSymbol = calculator.selectOperation();
         Operation operation = calculator.getOperation(operationSymbol);
