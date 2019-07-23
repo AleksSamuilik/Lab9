@@ -1,1 +1,1 @@
-Calculator.
+Console application by calculator type
