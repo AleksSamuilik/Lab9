@@ -7,7 +7,7 @@ import java.util.Stack;
 public abstract class AbstractOperation implements Operation {
 
     protected boolean comparisonOperation(String firstNumber, String secondNumber) {
-        if (firstNumber.compareTo(secondNumber) >= 0) {
+        if (Integer.valueOf(firstNumber).compareTo(Integer.valueOf(secondNumber)) >= 0) {
             return true;
         } else {
             return false;

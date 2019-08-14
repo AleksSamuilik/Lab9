@@ -13,6 +13,7 @@ public class Subtraction extends AbstractOperation {
         return "Subtraction";
     }
 
+
     public String operate(String... number) {
         String firstNumber = number[0];
         String secondNumber = number[1];
@@ -39,13 +40,21 @@ public class Subtraction extends AbstractOperation {
                     builder.insert(0, result);
                     residue = 0;
                 } else {
-                    result = result + digit;
-                    result = (int) (Math.log10((result)));
+                    result += digit;
                     residue = 1;
                     builder.insert(0, result);
                 }
             } else if (largerNumber.size() > 0 && lessNumber.size() == 0) {
-                builder.insert(0, largerNumber.pop());
+                int checkNumber = largerNumber.pop();
+                if (checkNumber == 0 && residue == 1) {
+                    result = digit - residue;
+                } else if (checkNumber != 0 && residue == 1) {
+                    result = checkNumber - residue;
+                    residue = 0;
+                } else {
+                    result = checkNumber;
+                }
+                builder.insert(0, result);
             } else if (largerNumber.size() == 0 && lessNumber.size() == 0) {
                 break;
             }

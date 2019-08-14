@@ -4,6 +4,7 @@ import java.util.Stack;
 
 public class Addition extends AbstractOperation {
 
+
     public final String getOperationSymbol() {
         String symbol = "+";
         return symbol;

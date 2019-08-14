@@ -2,7 +2,6 @@ package it.alex.lab9.operation;
 
 import java.util.Stack;
 
-
 public class Multiplication extends AbstractOperation {
 
     public final String getOperationSymbol() {

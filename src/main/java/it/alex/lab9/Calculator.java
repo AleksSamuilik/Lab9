@@ -1,24 +1,18 @@
 package it.alex.lab9;
 
-import it.alex.lab9.operation.*;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Calculator {
     private final Map<String, Operation> operationMap;
 
-    public Calculator() {
-        Operation add = new Addition();
-        Operation subtract = new Subtraction();
-        Operation multiply = new Multiplication();
-        Operation exponent = new SquareExponent();
+    public Calculator(Collection<Operation> collection) {
+        Iterator iterator = collection.iterator();
         operationMap = new HashMap<>();
-        operationMap.put(add.getOperationSymbol(), add);
-        operationMap.put(subtract.getOperationSymbol(), subtract);
-        operationMap.put(multiply.getOperationSymbol(), multiply);
-        operationMap.put(exponent.getOperationSymbol(), exponent);
+        Operation operation;
+        while (iterator.hasNext()) {
+            operation = (Operation) iterator.next();
+            operationMap.put(operation.getOperationSymbol(), operation);
+        }
     }
 
     private String readUserInput() {
@@ -63,7 +57,12 @@ public class Calculator {
     }
 
     private String selectOperation() {
-        System.out.println("What operation do you want to do? ( '   +   '   -   '   *   '   ^   )");
+        System.out.print("What operation do you want to do? (  '    ");
+        for (String key : operationMap.keySet()) {
+            System.out.print(key + "   '  ");
+        }
+        System.out.print(")");
+        System.out.println();
         return readOperation();
     }
 
@@ -76,13 +75,12 @@ public class Calculator {
         return arrayNumber;
     }
 
-   public void calculate(){
-        Calculator calculator = new Calculator();
-        String operationSymbol = calculator.selectOperation();
-        Operation operation = calculator.getOperation(operationSymbol);
+    public void calculate() {
+        String operationSymbol = selectOperation();
+        Operation operation = getOperation(operationSymbol);
         int quantity = operation.getNumberOfOperands();
-        String result = operation.operate(calculator.getOperands(quantity));
-        calculator.printResult(result, operation);
+        String result = operation.operate(getOperands(quantity));
+        printResult(result, operation);
     }
 
     private void printResult(String result, Operation operation) {
